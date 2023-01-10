@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .row{
+
+                    padding-left: 150px;
+                    padding-right: 150px;
+            }
+
+        
+    </style>
+</head>
+<body>
+    <div class="row">
+    <h1>Backtracking</h1>
+    <p style="color: #858585;">backtracking is a form of recursion.</p>
+    <P style="color: #858585;">The usual scenario is that you are faced with a number of option ,and you must choose one of these. After you make your choice you will get a new set of options; just what set of option you get depends of what choice you made. this procedure is repeted over until you reach a final state. if you made a good sequence of choices,your final state is a goal state; if you didn't it isn't. </P>
+    <p style="color: #858585;">conceptullay, you start at the root of a tree; the tree probably hasdsome good leaf. At each node, begining with  the root, you choose one of its children to move to, and you keep this up until you get to a leaf.</p>
+    <p style="color: #858585;">suppose you get to a bad leaf. You can backtrack to continue the search for a good leaf by revoking your most recent choice,and trying out the next option in that set of options. if you run out of options,revoke the choice that got you here, and try another choice at that node. if you end up at the root with no options left, there are no good leaves to be found.</p>
+    <p style="color: #858585;">this needs an example.</p>
+    <img src="C:\Users\HP\OneDrive\Desktop\project 1\Image_root.png">
+
+
+
+    
+    
+    <ol type="1">
+    <li style="color: #858585;">Starting at Root, your options A and B. You choose A</li>
+    <li style="color: #858585;">At A, your options are C and D.you choose C. </li>
+    <li style="color: #858585;">C is bad. Go Back to A.</li>
+    <li style="color: #858585;">At A, you have already tried C, and it failed. Try D.</li>
+    <li style="color: #858585;">D is bad. Go back to A.</li>
+    <li style="color: #858585;">At A, you have no options left to try. Go back to Root></li>
+    <li style="color: #858585;">At Root, you have already tried A. Try B></li>
+    <li style="color: #858585;">At B, your options are Eand F.try E.</li>
+    <li style="color: #858585;">E is good. Congratulations!</li>
+    </ol>
+
+    <table style=" width:998px; height:100px; color:#858585; background:gainsboro; border:2px solid gray; border-radius:7px;">
+        
+        <tr>
+            <td>In this exampale we drew a picture of tree. The tree is an abstract model of the possible sequences of choices we could make. there is also is a data structure is called a tree but usually we don't have data structure to tellas what choices we have.(if we do have an actual tree data structure, backtraking on it is called depath-first tree searching.)  </td>
+        </tr>
+    </table>
+
+
+    <h3>The Backtracking Algorithm </h3>
+    <table style=" width:998px; height:250px; color:deepskyblue; border:2px solid gray; border-radius: 7px;" >
+        <tr><td>
+        <pre>
+            boolean solve(Node n) {
+                if n is leaf node{
+                    if the leaf is a goal node, return true
+                    else return false
+                } else {
+                    for each child c of n {
+                        if solve(c) succeeds, return true
+                    }
+                    return false
+                }
+            }
+        </pre>
+        </td></tr>
+    <pre>
+                                                                                                                                                                                                                   
+    </pre>
+
+
+
+    </table>
+
+    <table style="width:998px; height:100px; color:#858585;background:gainsboro; border:2px solid gray; border-radius: 7px;">
+    <tr><td>
+    Notice that the algorithm is expressed as a boolean function. this is essential to understanding the algorithm. if solve(n) is true, that means  node n is part of a solution--that is, node n is one of the nodes on a path from the root to some goal node. we say that n is solvable. if solve(n) is false, then there is no path that includes n to any goal node.
+    </td></tr></table>
+
+
+
+    <h3>How does this work?</h3>
+    <ul>
+        <li style="color:#858585;">if any child of n is solvable, then n is solvable.</li>
+        <li style="color:#858585;">if no child of n is solvable, then n is not solable.</li>
+    </ul>
+
+    <p style="color:#858585;">Hence, to decide whether any non-leaf node n is solvable(part of a path to a goal node), all you have todo is test whether any child of n is solvable. this is done recursively on each child of n in the above code, thi is done by the lines </p>
+
+    <table style="width:998px; height:90px; color:deepskyblue; border:2px solid gray; border-radius: 7px;">
+    <tr><td>
+    <pre>
+            for each child c of n {
+                if solve(c) succeeds, return true
+            }
+            return false
+    </pre>
+    </td></tr></table>
+
+    <p style="color:#858585;">Eventually the recursion will "bottom" out at a leaf node. if the leaf node is a goal node, it is solvable; if the leaf nodeis not a goal node, it is not solvable, this is our base case in the above code, this is done by the lines </p>
+    <table style="width:998px; height:100px; color:deepskyblue; border:2px solid gray; border-radius: 7px;">
+    <tr><td>
+    <pre>
+            if n is a leaf node {
+                if the leaf is a goal node, return true
+                else return false
+            }
+
+    </pre>
+
+    </td></tr>
+    </table>
+
+    <p style="color:#858585;">The backtracking algorithm is simple but important. You should understand it thoroughly. Another way of stating it is as follws:</p>
+    <h2> To search a tree:</h2>
+    <ul>
+        <li style="color:#858585;">if the tree  consists  of a single leaf, whether it is a goal  node.</li>
+        <li style="color:#858585;">Otherwise, search the subtrees until you find one containing a goal node, or until you have searched them all unsucessfully. </li>
+    </ul>
+    <h2>Non-recursive backtracking, using a stack</h2>
+    <p>Backtracking is a rather typical recursive algorithm, and any recursive algorithm can be rewritten as a stack algorithm. In fact,  that is how your recursion algorithms are translated into machine or assembly language.</p>
+
+    <table style=" width:998px; height:250px; color:deepskyblue; border:2px solid gray; border-radius: 7px;">
+        <tr><td>
+            <pre>
+                boolean solve (Node n){
+                    put node n on the stack;
+                    while the stack is not empty {
+                        if the node at the top of the stack is a leaf {
+                            if it is a goal node, return true
+                            else pop it off the stack
+                        }
+                        else{
+                            if the node at the top of the stack has untried children 
+                            push the next untried child onto tne stack
+                            else pop the node off the stack
+                        }
+                        return false
+                    }
+                }
+            </pre>
+        </td></tr>
+    </table>
+    <p style="color:#858585;"> Starting from the root, the only nodes that can be pushed onto the stack are the children of the node currently on the top of the stack, and these are only pushed on child at a time; hence the node on the stack at all time describe a valid path in the tree. Nodes are removed from the stack only when it is known that they have been no goal nodes at all, and no solution to the problem.</p>
+    <p style="color:#858585;">When the stack  algorithm terminates successfully, the nodes on the stack form (in reverse order) a path from the root to a goal node. </p>
+    <p style="color:#858585;">Similar, when the recursive algorithm find a goal node, the path information is embodies (in reverse order)in the sequence of recursive calls. Thus as the recursion unwinds, the path can be recovered one node at a time, by (for instrance) printing the node at the current level, or storing it in an array.</p>
+    <p style="color:#858585;">Here is the recursive backtraking alogorithm, modified slightly to print (in reverse order)the nodes along the sucessful path:</p>
+    <table style="width:998px; height:250px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+    <tr><td>
+    <tr><td>
+        <pre>
+            boolean solve(Node n) {
+                if n is a leaf node {
+                    if the leaf is a goal  node {
+                        print n 
+                        return true
+                    }
+                    else return false
+                }else {
+                    for each child cof n {
+                        if solve (c) succeeds {
+                            print n 
+                            return true
+                        }
+                    }
+                    return false
+                }
+            }
+        </pre>
+    </td></tr>
+    </td></tr>
+    </table>
+
+    <h2>Keeping backtracking simple</h2>
+    <p style="color:#858585;">All of these versions of the backtracking algorithm are pretty simple, but when applied to real problem , they can get pretty cluttered up with details.Even determining whether the node is a leaf can be complex:</p>
+    <p style="color:#858585;">for example, if the path represents a series of moves in a chess end game problem, theleves are the checkmate and stalemate solutions</p>
+    <p style="color:#858585;">To keep the program clean, therefore, tests like this should be buried in methods. for example, you could test whether a node is a leaf by writing a game Over method (or you could even node on the current path, which of its children have been tried already (so we don't have to try them again). In the above code we made this look simple, by just saying for each child c of n. in reality, it may be difficult to figure out what the possible children are and each child of that node can represent the arrangement after some piece has made a legal move. How do you find these children, and how do you keep track of which ones you've already examined?</p>
+    <p style="color:#858585;">The most straihtforwoad war=y to keep track of which children of the node havebeen tried is as follows:UPon initial entry to the node(that is,when you first get there from above), make a list of all its children. As you try each child, take it off the list. When the list is empty, there are no remaining untried children, and you can return "failure." This is a simple approach , but it may require quite a lot of a sdditional work.</p>
+    <p style="color:#858585;">There is an easier way to keeep track of which children have been tried, if you can define an ordering on the children. if there is an ordering, and you know which child you just tried, you can determine which child to try next.</p>
+    <p style="color:#858585;">For example, you might be able to number the children 1 through n, and try them in number order. Then if you have just tried child k, you know that you have already tried children 1 through k-1 and you have not yet tried children k+1 through n. or , if you are trying to color a map with just four colors, you can always try red first, then yellow, then greeen, then blue. if child yellow fails, you know to try child green next. if you are searchinga maze , you can try chices in the order left, straight, right(or perhaps, north east, south, west).</p>
+    <p style="color:#858585;">It isn't always easy to find simple way to order the children of a node. In the chess game example, you might number your pieces (or perhaps the squares of the board) ans try them in numerical order; but in addition each piece mayalso have several moves, and these must also be ordered.</p>
+
+    <h2>Example: Tree Search</h2>
+    <p style="color:#858585;">For starters, let's do the simplest possible example of backtrackingwhich is searching an actual tree. We will also use the simplest kind of tree, a binary tree. </p>
+    <p style="color:#858585;">A Binary Tree is a data structure compsed of nodes. One node is designated node. Each node can reference (point to)zero, one or two other nodes, whichare called its children. the children are referred to as the left child and/pr the right child. all nodes are reachaable (by one or more steps) from the root node, and there are no cycles. The first example in this paper (which we repeat here)shows a binary tree. </p>
+    <p style="color:#858585;">Here's defination of the Binary Tree calss:</p>
+    <table style="width:998px; height:250px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+    <tr><td>
+        <pre>
+            public class Binary Tree {
+                BinaryTree leftChild = null;
+                BinaryTree rightChild = null;
+                boolean isGoalNode = false;
+                String name;
+
+                Binary Tree(String name, BinaryTree left, BinaryTree right, boolean isGoalNode) {
+                    this.name = name;
+                    liftChild = left;
+                    rightChild + right;
+                    this.isGoalNode = isGoalNode;
+                }
+            }
+        </pre>
+    </td></tr>
+    </table>
+    <p style="color:#858585;">Next we will create a Tree Search class, and in it we willdefine a method makeTree() which constructs the above binary tree</p>
+    <table style="width:998px; height:250px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+    <tr><td>
+        <pre>
+            static BinaryTree makeTree() {
+                BinaryTree root, a, b, c, d, e, f;
+                c = new BinaryTree("C",null, null, false);
+                d = new BinaryTree("D",null, null, false);
+                e = new BinaryTree("E",null, null, true);
+                f = new BinaryTree("F",null, null, false);
+                a = new BinaryTree("A",c,d, false);
+                b = new BinaryTree("B",e, f, false);
+                root = new BinaryTree("root",a, b, false);
+                return root;
+            }
+
+        </pre>
+    </td></tr>
+    </table>
+
+    <p style="color:#858585;">Here's a main program to create a binary tree and try to solve it:</p>
+    <table style="width:998px; height:100 px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+    <tr><td>
+        <pre>
+            public static void main (string args[]) {
+                BinaryTree tree = makeTree();
+                system.out.printin (solovable(tree));
+            }
+        </pre>
+    </td></tr>
+    </table>
+
+    <p style="color:#858585;">And finally, here's the recursive backtracking routine to "solve" the binary tree by finding a goal node.</p>
+    <table style="width:998px; height:100 px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+    <tr><td>
+        <pre>
+            static boolean solvable(BinaryTree node){
+                /*1*/ if (node == null)return false;
+                /*2*? if (node.isGoalNode)return true;
+                /*3*/ if (solvable(node.leftChild))return true;
+                /*4*/ if(solvable(node.rightChild))return true;
+                /*5*/ return false;
+            }
+        </pre>
+    </td></tr>
+    </table>
+    <p style="color:#858585;">Here's what the numbered lines are doing:</p>
+        <oL>
+            <li style="color:#858585;">If we are given a null node, it's not solvable. This statement is so that we can call this method with the children od a node, without first checking whether those children actually exist.</li>
+            <li style="color:#858585;">If the node we are given is goal node, return success.</li>
+            <li style="color:#858585;">See if the left child of node is solvable, and if so, conclude that node is solvable. we will only get to this line if node is non-null and is not a goal node,says to</li>
+            <li style="color:#858585;">Do the same thing for the right child.</li>
+            <li style="color:#858585;">Since neither child of node is solvable, node itself is not solvable.</li>
+            <li style="color:#858585;">This program runs correctly and produces the unenlightening result true.</li>
+            <li style="color:#858585;">Each time we ask for another node, we have to check if it is null. in the above we put that check as thefirst thing in solvable. An alternative would be to check first whether each child exists, and recur only if they do. Here's thatalternative version:</li>
+        </oL>
+        <table style="width:998px; height:100 px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+        <tr><td>
+            <pre>static boolean aolvable(BinaryTree node) {
+                if (node.isGoalNode)return true;
+                if (node. liftChild != null && solvabl(node.leftChild))return true;
+                if (node. rightChild != null &&solvable(node.rightChild))return true;
+                return false;
+            }
+            </pre>
+        </td></tr>
+        </table>    
+
+        <p style="color:#858585;">I think the first version is simpler, but the second version is slightly more efficient.</p>
+        <h2>What are the children?</h2>
+        <p style="color:#858585;">One of the things that simplifies the above binary tree search is that, at each choice point, you can ignore all the previous choices. previous choices don't give you any information about what you should do next; as far as you know, both the left and the right child are possible solutions. In many problems, however, you may be able to eliminate children immediately, without recursion.</p>
+        <p style="color:#858585;">Consider, for example, the problem of four-coloring a map. it is a theorem of mathematics that any map on a plane, no matter how convoluted the countries are, can be colored with at most four colors, so that no two countries that share a border are the same color.</p>
+        <p style="color:#858585;">to color a map, you choose a color for the first country, then a color for the second counrty, and so on all countries are colored.</p>
+        <p style="color:#858585;">There are two ways to do this:</p>
+        <ul>
+            <li>Method 1. Try each of the four possible colors, and recur. When you run out of countries, check whether you are at a goal node</li>
+            <li>Method 2, Try only those colors that have not alreay been used for an adjacent country, and recur. if and when you run out of countries, you have successfully colored the map.</li>
+        </ul>
+        <p style="color:#858585;">Let's apply each of these two methods to the problem of coloring a checkerboarf. This should be easily solvable; after, all, a checkerboard only needs two colors.</p>
+        <h2>booleanmaplsOK()</h2>
+        <p style="color:#858585;">used by method 1 to check (at every node) whether the entire map is colored correctly.</p>
+        <h2>boolean okToColor(int row, int column, int color)</h2>
+        <p style="color:#858585;">used by method 2 to check, at every node, whether there is an adjacent node already colorwed with the given color.</p>
+        <h2>int[] nextRowAndColumn(int row, int column)</h2>
+        <p style="color:#858585;">Used by both methods to find the next "country" (actually, the row and column of the next square on the checkerboard).</p>
+        <p style="color:#858585;">Here's the code for method 1:</p>
+        <table style="width:998px; height:100 px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+        <tr><td>
+            <pre>
+                boolean explore1(int row, int coloumn, it color) {
+                    if (row >= NUM_ROWS)return maplsOK();
+                    map[row][column] + color;
+                    for (int nextColor =RED; nextColor <=BLUE; nextColor++) {
+                        int[] next = nextRowAndColumn(row, Column);
+                        if (explre1(next[0],next[1],nextColor))return true;
+                    }
+                    return false;
+                }
+            </pre>
+        </td></tr>
+        </table>
+        <p style="color:#858585;">And here's the code for method 2:</p>
+        <table style="width:998px; height:100 px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+        <tr><td>
+            <pre>
+                boolean explre2(int row, int column, int color) {
+                    if (row >= NUM_ROWS)return true;
+                    if (ok ToColor(row, column, color)) {
+                        map[row][coloumn] = color;
+                        for(int nextColor = RED;nextColor <= BLUE; nextColor++) {
+                            int[] next = nextRowAnd Coloumn(row, column);
+                            if(explre2(next[0], next[1],nextColor))return true;
+                        }
+                    }
+                    return false;
+                }
+            </pre>
+        </td></tr>
+        </table>
+        <p style="color:#858585;">Those appear pretty similar, and you might think they are equally good. However, the timing information suggests otherwise:</p>
+        <table border="2px">
+            <tr>
+                <td></td>
+                <th style="background-color:gray;">2 by 3 map</th>
+                <th style="background-color:gray;">3 by 3 map</th>
+                <th style="background-color:gray;">3 by 4 map</th>
+            </tr>
+            <tr>
+            <td style="background-color:gray;">Method 1:</td>
+            <td>60 ms.</td>
+            <td>940 ms.</td>
+            <td>60530 ms.(1 minute)</td>
+            </tr>
+            <tr>
+            <td style="background-color:gray;">Method 2:</td>
+            <td>0 ms.</td>
+            <td>0 ms.</td>
+            <td>0 ms.</td>
+            </tr>
+            
+        </table>
+        <p style="color:#858585;">the zeros in the above table indicate times too short to measuree(less than 1 millisecond). Why this huge difference?Either of these methods could have exponential growth. Eliminating a node automatically eliminates all of its descendents, and this will often prevent exponential growth. Conversely, by waiting to check until a leaf node is reached, expontial growth is practically guaranteed. if there is any way to eliminate children (reduce the set of choices), do so!</p>
+        <h2>Debugging techniques</h2>
+        <P style="color:#858585;">often our first try at a program doesn't work and we need to debug it. Debuggers are helpful, but sometimes we need to fall back on inserting print statements. There are some simple tricks to making effective use of print statements. These tricks can be applied to any program, but are especially useful when you are trying to debug recursive routines. </P>
+
+        <h3>Trick #1: Indent when you print method entries and exits.</h3>
+        <p style="color:#858585;">often, the best debugging technique is to print every method call and return (or at least the most important). You probably want to print, for each method, what parameters it came in with, and what value it leaves with. However, if you just print a long list of these, it's hard to match up method exits with thier corresonding entire. Indenting to  show the level of nesting can help. </p>
+
+        <h3>Trick #2: Use specialized print methods for debugging.</h3>
+        <p style="color:#858585;">Don't clutter up your actual code more than you must,. also, remember that code insert for deougging purposescan itself containbugs, or (in the worst case)can affect the results, so be very careful with it. </p>
+        <p style="color:#858585;">Here's our debugging code. For this trivia program, there almost more deaugging vode than actual code, but in large programs the proportions will be better.</p>
+        <table style="width:998px; height:100 px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+        <tr><td>
+            <pre>
+                static string indent = "";
+
+
+
+
+                static String name (Binary Tree node) {
+                    if (node == null) return  null;
+                    else return node.name;
+                }
+
+                static void enter(BinaryTree node) {
+                    System.out.printin(indent + "Entering solvable(" +name(node)+ ")");
+                    indent = indent + " ";
+                }
+
+                static boolean yes(BinaryTree node){
+                    indent = indent.substring(3);
+                    System.out.printin(indent+ "solvable(" + name(node)+ ")returns true");
+                    return true;
+                }
+
+                static boolean no(BinaryTree node) {
+                    indent = indent.substring(3);
+                    System.out.printin(indent + "solvable(" +name(node)+ ")return false");
+                    return false;
+                }
+                
+            </pre>
+        </td></tr>
+        </table>
+        <p style="color:#858585;">To use this code, we modify solvableas follws:</p>
+        <table style="width:998px; height:100 px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+        <tr><td>
+            <pre>
+                static boolean solvable(BinaryTree node) {
+                    enter(node):
+                    id (node = = nill)return no(node);
+                    if (node.isGoalNode)return yes(node);
+                    if (solvable(node.leftChild))return yes(node);
+                    if (solvable(node.rightChild);
+                    return no(node);
+                }
+            </pre>
+        </td></tr>
+        </table>
+        
+        <p style="color:#858585;">And we get these results:</p>
+        <pre style="color:#858585;">
+            Entering solvable(Root)
+            | Entering solvable(A)
+            | | Entering solvable(C)
+            | | | Entering solvable(null)
+            | | | solvable(null) returns false
+            | | | Entering solvable (null)
+            | | | solvable(null)returns false
+            | | solvable(C) returns false 
+            | | Entering solvable(D)
+            | | | Entering solvable(null) 
+            | | | solvable(null)return false
+            | | | Entering solvable(null)
+            | | | solvable(null) return false
+            | | solvable(D) return false
+            | solvable(A) return false
+            | Entering solvable(B)
+            | | Entering solvable(E)
+            | | solvable(E) return true
+            | solvable(B) return true
+            solvable(Root) return true
+            true
+        </pre>
+        <h3>Trick#3: Never discard your debugging statements.</h3>
+        <p style="color:#858585;">Writing debugging statementis programming, too. Often it's as much work to debugging statement as it is to debug the actual program is working, WHY throw this code away?</p>
+        <p style="color:#858585;">THe simple solution is to make your debugging statements conditional. For example,</p>
+        <table style="width:998px; height:100 px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+        <tr><td>
+
+        <pre>
+            static final boolean debugging = false;
+
+            static void enter(BinaryTree node){
+                if (debugging){
+                    system.out.printin(indent + "Entering solable(" + name(node) + ")");
+                    indent = indent "|";
+                }
+            }
+
+            static boolean yes(BinaryTree node) {
+                if (debugging){
+                    indent = indent.substring(3);
+                    System.out.printin(indent + "solvable("+ name(node)+ ") return true");
+
+                }
+                return true;
+            }
+
+            static boolean no(BinaryTree nodde){
+                if (debugging){
+                    indent = indent.substring(3);
+                    System.out.printIn(indent + "solable(" + name(node) + ") return false");
+                }
+                return true
+            }
+        </pre>
+        </td></tr>
+        </table>
+
+        <p style="color:#858585;">In industry , actual programs often have multiple flags to control different aspects of debugging. Don't worry too much about making your code large; modern compilers will notice that since the variable debugging is final, it can neve be true, and the controlled code will be discarded.</p>        
+        <h3>Trick #4: Create an Exception.</h3>
+        <p style="color:#858585;">if an Exception is throw , you can get information about just where it happened by sending it the message printStackTrace(PrintStream).Since an Exception is an object like any other , you can create and throw your own Excetions. however, java programmers don't always realize that you can create an Exception without throwing it. For example, the folowing code</p>
+
+        <table style="width:998px; height:100 px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+        <tr>
+            <td>
+            <pre>
+            new Exception("Checkpoint Charlie"). printStackTrace(System.out);
+            </pre>
+            </td>
+        </tr>
+        </table>
+        <p style="color:#858585;"> will print out a message something like this,and the program will then continue normally. that is. the above code just acts like a print statement.</p>
+        <table style="width:998px; height:100 px; color:deepskyblue ;border:2px solid gray; border-radius:7px;">
+            <tr><td>
+            <pre>
+            java.lang.Exception:Checkpoint Charlie
+                at TreeSearch.solvable(TreeSearch.java:53)
+                at TreeSearch.solvable(TreeSearch.java:57)
+                at TreeSearch.solvable(TreeSearch.java:72)
+                at_SHELL38.run(_SHELL38>java:16)
+                at bluej.runtime.ExecServer.suspendExecution(UnKnown Source)
+
+            </pre>
+            </td></tr>
+        </table>
+
+        <h2> Example: Cindy's Puzzle</h2>
+        <p style="color:#858585;"> I call the following puzzle "Cindy's pizzle for historical reasons. You have some number n of black marbles and the same number pf white marbles, and you have a playing board which consists simply of a line of 2n+1 spaces to put the marbles in Start withthe black marbles all at one end (say, the left), the white marbles all at the other end, and a free space in between. </p>
+        <table border="0" align="center" cellpadding="5" cellspacing="0">
+            <tr>
+               
+                     <table align="center" bgcolor="silver" border="1" cellpadding="5" cellspacing="0">
+                        <tr>
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>    
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>
+                            <td width="40">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>
+                        </tr>
+                     </table>
+                     </tr>
+                     </table>
+
+
+        <p style="color:#858585;"> the goal is to reverse the positions of the marbles</p>
+        <table border="0" align="center" cellpadding="5" cellspacing="0">
+            <tr>
+               
+                     <table align="center" bgcolor="silver" border="1" cellpadding="5" cellspacing="0">
+                        <tr>
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>    
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>
+                            <td width="40">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>
+                        </tr>
+                     </table>
+                     </tr>
+                     </table>
+        <p style="color:#858585;"> the black marbles can only move to the right, and the white marbles  can only move to the left(no backing uP).At each move, a marble can either:</p>
+
+            <ul>
+                <li style="color:#858585;">Move one space ahead , if that space is clear, or</li>
+                <li style="color:#858585;"> jump ahead over exactly one marble of the opposite color, if the space just beyond that marble is clear.</li>
+            </ul>
+        <p style="color:#858585;"> For example, you could make the following sequence of moves: </p>
+                    
+                     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        <table border="0" cellpadding="5" cellspacing="0">
+            <tr>
+                <tr><td><b>Starting position:&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+
+                     <table align="center" bgcolor="silver" border="1" cellpadding="5" cellspacing="0">
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>    
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>
+                            <td width="40">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>
+                        </tr>
+                     </table>
+            </tr>
+         </table>
+
+         
+            <tr>
+                <tr><td><b>Black move ahead:</td>
+                     <table align="center" bgcolor="silver" border="1" cellpadding="5" cellspacing="0">
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>
+                            <td width="40">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>    
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>    
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>    
+                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>    
+
+                        </tr>
+                     </table>
+
+                     <tr>
+                        <tr><td><b>white jumps:</b>:</td>
+                             <table align="center" bgcolor="silver" border="1" cellpadding="5" cellspacing="0">
+                                    <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>
+                                    <td width="40">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>    
+                                    <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>    
+                                    <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>    
+                                    <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>    
+        
+                                </tr>
+                             </table>
+
+                    <tr>
+                     <tr><td><b>Black moves ahead:</td>
+                                     <table align="center" bgcolor="silver" border="1" cellpadding="5" cellspacing="0">
+                                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>
+                                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>   
+                                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>    
+                                            <td width="40">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>    
+                                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>    
+                
+                                        </tr>
+                                     </table>
+                                     
+                                     <tr>
+                                        <tr><td><b>Black jumps:</td>
+                                             <table align="center" bgcolor="silver" border="1" cellpadding="5" cellspacing="0">
+                                                    <td width="40">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                    <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>    
+                                                    <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>    
+                                                    <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>    
+                                                    <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>    
+                        
+                                                </tr>
+                                             </table>
+                                             <tr>
+                                                <tr><td><b>White moves ahead:</td>
+                                                     <table align="center" bgcolor="silver" border="1" cellpadding="5" cellspacing="0">
+                                                            <td width="40">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>    
+                                                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>    
+                                                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\black-ball.png"></td>    
+                                                            <td width="40"><img src="C:\Users\HP\OneDrive\Desktop\project 1\white-ball.png"></td>    
+                                
+                                                        </tr>
+                                                     </table>        
+                                            <tr><td><b>stuck!</td>
+
+
+                                    
+                           
+        
+
+
+
+
+
+            </tr>
+         </table>
+
+
+
+        <P style="color:#858585;">The backtracking method is named solvable and returns a boolean. In solvable we shall need to check whether we are at a leaf, which in this case  means a position from which no further moves are possible. This isn't so easy.</P>
+        <p style="color:#858585;">Now to the program. the main program will initalize the board, and call a recursive backtraking routine to attempt to solve the puzzle. The backtraking routine will either succeed and print out a winning path, or it will fail, and the main program will have to print out the bad news.</p>
+        <p style="color:#858585;">The backtracking method is named solvable and returns a boolean. In solvable we shall need to check whether we are at a leaf, which in this case means a position from which no further moves are possible, this isn't so easy.</p>
+        <p style="color:#858585;">Each possible move will result in a new board position, and these new board positions are the children of the current board position, Hence to find the children of a node(that is, of a board position), we need only find the possible moves from that the node.Remember that it is also highly desirable to find an ordering on these possible moves.  </p>
+        <p style="color:#858585;">Here it is time to stop and take thought. To make progress, we must analyze the game to some extent. probably a number of approches would work, and what follows is based on the way i worked it out, if you were to program this puzzle, you might find a different but equally valid approch.</p>
+        <p style="color:#858585;">First, notice that if a marble has a move, that move is  unique: if it can move ahead one square, than it cannot jump, it cannot move ahead one square. This suggests that, to find the possible moves, we might assign number to the marbles, and check each maeble in turn. when we have looked all the marbles, we have looked at all the possible moves. This would require having a table to keep track of where each marbles is, or else somehow "marking" each marble with its number and searching the board each time to find the marble we want. Nether alternative is very attractive. </p>
+        <p style="color:#858585;">Next, notice that  for a given board position, each marble occupies a unique space.Hence, instead of talking about moving a particular marble, we can talk about moving the marble in a particular space. If a move is possible from a given space, then that must be the only move possible from that space contain a marble, but at least  the spaces (unlike the marbles) stay in one place.</p>
+        <p ><b>Now we have a simpler ordering moves to use in our program. Just check, in order, the 2n+1 spaces of the board. For each space, either zero or one moves is possible . With this understanding, we can write a boolean method can move(int[] board,int position) which determines whether a move is possible from the given position:</b></p>
+        <ul>
+            <li style="color:#858585;">If the position is empty, no move is possible;</li>
+            <li style="color:#858585;">If the position contains black marble, the method checks for a move or jump to the right;</li>
+            <li style="color:#858585;">If the position contains a white marble , the method checks for a move or jump to the left;  </li>
+        </ul>
+        <p style="color:#858585;">WE write another method int[] makeMove(int[] oldBoard, int position that will take and a position, make a move from that possiton, and return as its value a new board . (we could write this some what more efficiently ny changing the old board, rather than creating a new one, but here we are more concerned with simplicity.) In technical jargon , make move is "applicative" rather than "mutative." </p>
+        <p style="color:#858585;">Along with can Move and makeMove, we are using methods puzzleSolved and printBoard with meaning that should be obvious.</p>
+        <table style=" width:998px; height:250px; color:deepskyblue; border:2px solid gray; border-radius: 7px;" >
+        <tr><td>
+            <pre>
+    boolean solvable(int[] board){
+        if (puzzleSolved(board)) {
+            returntrue;
+        }
+        for (int position = 0; position < BOARD-SIZE; position++){
+            if (canMove(board, position)) {
+                int[] newBoard = makeMove(board, position);
+                if (solvable(newBoard)) {
+                    print Board(newBoard);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+            </pre>
+        </td></tr>
+    
+    </table>
+
+    <p style="color:#858585;">Along with canMove Make Move, we are using methods puzzleSolved and printBoard with meanings that should be obvious.</p>
+    <p style="color:#858585;"> is some output from the program:</p>
+    <b>
+    <i style="color:blue;">16.</i>  WHITE WHITE WHITE _____ BLACK BLACK BLACK<br>
+    <i style="color:blue;">15.</i>  WHITE WHITE WHITE BLACK _____ BLACK BLACK<br>
+    <i style="color:blue;">14.</i>  WHITE WHITE _____ BLACK WHITE BLACK BLACK<br>
+    <i style="color:blue;">13.</i>  WHITE _____ WHITE BLACK WHITE BLACK BLACK<br>
+    <i style="color:blue;">12.</i>  WHITE BLACK WHITE _____ WHITE BLACK BLACK<br>
+    <i style="color:blue;">11.</i>  WHITE BLACK WHITE BLACK WHITE _____ BLACK<br>
+    <i style="color:blue;">10.</i>  WHITE BLACK WHITE BLACK WHITE BLACK _____<br>
+    <!-- <i style="color:blue;">9.</i>   WHITE BLACK WHITE BLACK _____ BLACK WHITE<br>
+    <i style="color:blue;">9.</i>   WHITE BLACK WHITE BLACK _____ BLACK WHITE<br> -->
+    <i style="color:blue;">9.</i>   WHITE BLACK WHITE BLACK _____ BLACK WHITE<br>
+    <i style="color:blue;">8.</i>   WHITE BLACK _____ BLACK WHITE BLACK WHITE<br>
+    <i style="color:blue;">7.</i>   _____ BLACK WHITE BLACK WHITE BLACK WHITE<br>
+    <i style="color:blue;">6.</i>   BLACK _____ WHITE BLACK WHITE BLACK WHITE<br>
+    <i style="color:blue;">5.</i>   BLACK BLACK WHITE _____ WHITE BLACK WHITE<br>
+    <i style="color:blue;">4.</i>   BLACK BLACK WHITE BLACK WHITE _____ WHITE<br>
+    <i style="color:blue;">3.</i>   BLACK BLACK WHITE BLACK _____ WHITE WHITE<br>
+    <i style="color:blue;">2.</i>   BLACK BLACK _____ BLACK WHITE WHITE WHITE<br>
+    <i style="color:blue;">1.</i>   BLACK BLACK BLACK _____ WHITE WHITE WHITE<br>
+
+
+    </b></P>
+
+
+
+    <table style="width:998px; height:100px; color:#858585;  background:gainsboro; border:2px solid gray; border-radius: 7px;">
+        <tr><td>
+        <p style="color:#858585;">Notice that the solution is given in reverse order: Black starts out on the left and white on the right, as in the last line.i've added line number tom the actual output in order to emphasize this point. Backtracking always produces its results (sequence of choices) in reverse order; it is up to you, the programmer, to reverse the results again to get them in the correct order.</p>
+        </td></tr>
+    </table>    
+</div>
+</body>
+</html>
